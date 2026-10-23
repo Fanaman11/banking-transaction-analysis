@@ -1,0 +1,35 @@
+SELECT *
+FROM transactions
+LIMIT 10;
+
+SELECT
+    COUNT(*) AS total_transactions,
+    COUNT(DISTINCT customer_id) AS unique_customers,
+    ROUND(SUM(amount_usd), 2) AS total_transaction_amount,
+    ROUND(AVG(amount_usd), 2) AS average_transaction_amount
+FROM transactions;
+
+SELECT
+    category,
+    COUNT(*) AS completed_transactions,
+    ROUND(SUM(amount_usd), 2) AS completed_value
+FROM transactions
+WHERE LOWER(status) = 'completed'
+GROUP BY category
+ORDER BY completed_value DESC;
+
+SELECT
+    SUBSTR(transaction_date, 1, 7) AS month,
+    COUNT(*) AS transaction_count,
+    ROUND(SUM(amount_usd), 2) AS total_amount,
+    ROUND(AVG(amount_usd), 2) AS average_amount
+FROM transactions
+GROUP BY SUBSTR(transaction_date, 1, 7)
+ORDER BY month;
+
+SELECT
+    transaction_date,
+    amount_usd,
+    status
+FROM transactions
+LIMIT 10;
